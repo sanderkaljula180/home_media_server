@@ -16,7 +16,6 @@ public class UserFactory {
         this.userRoleManager = userRoleManager;
     }
 
-
     public User createNewUserFromDto(UserDTO userDto, String role) {
 
         User user = new User();
@@ -26,7 +25,4 @@ public class UserFactory {
 
         return user;
     }
-
-
-
 }

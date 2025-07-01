@@ -4,7 +4,7 @@ For completing 5 sprints in one week, we need to adjust the plan to be more focu
 ```markdown
 □ Essential Test Coverage Only
    [x] Complete AuthServiceTest (3 missing test cases) - 1 hour
-   □ Create UserFactoryTest (core functionality) - 1 hour
+   [x] Create UserFactoryTest (core functionality) - 1 hour
    □ Basic Integration Test for Auth flow - 2 hours
 □ JaCoCo Setup
    □ Add to pom.xml - 30 mins

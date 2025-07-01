@@ -29,6 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO: Consider extracting common setup code to @BeforeEach when adding more tests
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
 

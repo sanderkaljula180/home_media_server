@@ -1,6 +1,7 @@
 package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.dto.UserDTO;
+import dev.sanderk.home_media_server.exception.InvalidCredentialsException;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
 import org.slf4j.Logger;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,8 +43,8 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userDTO.getUsername()));
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            logger.error("Wrong password");
-            throw new IllegalArgumentException("Wrong password");
+            logger.error("Authentication failed for user: {}", userDTO.getUsername());
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         Collection<? extends GrantedAuthority> authorities = user.getRoles().stream()

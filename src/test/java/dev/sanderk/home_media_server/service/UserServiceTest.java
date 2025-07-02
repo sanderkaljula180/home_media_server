@@ -2,6 +2,7 @@ package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.component.UserFactory;
 import dev.sanderk.home_media_server.dto.UserDTO;
+import dev.sanderk.home_media_server.exception.UserAlreadyExistsException;
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
@@ -76,7 +77,7 @@ public class UserServiceTest {
        when(userRepository.existsByUsername("existing_user")).thenReturn(true);
 
        // Act + Assert
-       assertThrows(IllegalArgumentException.class, () -> {
+       assertThrows(UserAlreadyExistsException.class, () -> {
            userService.registerNewDefaultUser(userDTO);
        });
 

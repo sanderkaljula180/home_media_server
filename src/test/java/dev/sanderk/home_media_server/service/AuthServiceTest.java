@@ -1,6 +1,7 @@
 package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.dto.UserDTO;
+import dev.sanderk.home_media_server.exception.InvalidCredentialsException;
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
@@ -159,7 +160,7 @@ public class AuthServiceTest {
                 .thenReturn(false);
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidCredentialsException.class, () -> {
             authService.autheticationForUserLogin(userDTO);
         });
 

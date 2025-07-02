@@ -1,7 +1,9 @@
 package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.component.UserFactory;
+import dev.sanderk.home_media_server.config.GlobalExceptionHandler;
 import dev.sanderk.home_media_server.dto.UserDTO;
+import dev.sanderk.home_media_server.exception.UserAlreadyExistsException;
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public User registerNewDefaultUser(UserDTO userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
             logger.warn("Username {} already exists", userDto.getUsername());
-            throw new IllegalArgumentException("Username already exists");
+            throw new UserAlreadyExistsException("Username " + userDto.getUsername() + " already exists");
         }
 
         User user = userFactory.createNewUserFromDto(userDto, Role.DEFAULT_USER_ROLE);

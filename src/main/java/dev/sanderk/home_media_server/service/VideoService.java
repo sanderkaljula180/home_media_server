@@ -45,14 +45,11 @@ public class VideoService {
 
         int httpRangeListStart = Integer.parseInt(splitHttpRangeListIntoStart[0]);
 
-
         RandomAccessFile raf = new RandomAccessFile(videoFile, "r");
         Long videoFileFullLength = raf.length();
         raf.seek(httpRangeListStart);
 
-        // WTF was this. I was overshooting the end of file and asked chatgpt help
         int httpRangeListEnd = Math.min(httpRangeListStart + CHUNK_SIZE - 1, videoFileFullLength.intValue() - 1);
-
 
         int videoBytesRange = httpRangeListEnd - httpRangeListStart + 1;
 

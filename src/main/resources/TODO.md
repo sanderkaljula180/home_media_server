@@ -14,9 +14,9 @@ For completing 5 sprints in one week, we need to adjust the plan to be more focu
 
 ### Sprint 2 (Day 2) - Basic Infrastructure
 ```markdown
-□ Error Handling
-   □ Global exception handler - 2 hours
-   □ Basic structured logging - 1 hour
+[x] Error Handling
+   [x] Global exception handler - 2 hours
+   [x] Basic structured logging - 1 hour
 □ API Documentation
    □ OpenAPI/Swagger setup - 1 hour
    □ Document existing endpoints - 2 hours
@@ -41,7 +41,8 @@ Video Streaming Improvements
 - Bandwidth detection
 □ Enhance error handling (1 hour)
 - Better file not found handling
-- Stream corruption protection
+- Stream corruption protection 
+  □ Enhance logging (1 hour)
 □ Add basic caching (1 hour)
 - Cache frequently accessed chunks
 
@@ -59,22 +60,4 @@ Progress Tracking
    □ JWT token enhancement - 2 hours
    □ Simple caching implementation - 2 hours
 ```
-
-
-Key Points for Success:
-1. Focus on MVP (Minimum Viable Product) for each feature
-2. Skip nice-to-have features
-3. Write minimal but essential tests
-4. Use Spring Boot's built-in capabilities where possible
-5. Keep implementations simple and extendable
-
-Would you like to:
-1. Start with Sprint 1 right away?
-2. Review any specific sprint in detail?
-3. Adjust the timeline or scope?
-
-This is an aggressive schedule but doable if we:
-- Keep implementations simple
-- Focus on core functionality
-- Make careful trade-offs between features and time
-- Use Spring Boot's auto-configuration where possible
+[ ] Add correlationId for logging

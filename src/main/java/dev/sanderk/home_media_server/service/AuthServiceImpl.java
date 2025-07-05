@@ -4,8 +4,7 @@ import dev.sanderk.home_media_server.dto.UserDTO;
 import dev.sanderk.home_media_server.exception.InvalidCredentialsException;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +21,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static net.logstash.logback.argument.StructuredArguments.kv;
+
+@Slf4j
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -29,7 +31,6 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtEncoder encoder;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtEncoder encoder) {
         this.userRepository = userRepository;
@@ -40,10 +41,19 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String autheticationForUserLogin(UserDTO userDTO) {
         User user = userRepository.findByUsername(userDTO.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userDTO.getUsername()));
+                .orElseGet(() -> {
+                   log.error("Username not found",
+                           kv("event", "USER_AUTHENTICATION_FOR_LOGIN"),
+                           kv("userId", userDTO.getUsername())
+                           );
+                   throw new UsernameNotFoundException("User not found: " + userDTO.getUsername());
+                });
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            logger.error("Authentication failed for user: {}", userDTO.getUsername());
+            log.error("Password match failed",
+                    kv("event", "USER_AUTHENTICATION_FOR_LOGIN"),
+                    kv("userId", userDTO.getUsername())
+            );
             throw new InvalidCredentialsException("Invalid username or password");
         }
 
@@ -58,6 +68,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String generateTokenForUserAuthorization(Authentication authentication) {
+        log.info("Generating token",
+                kv("event", "USER_AUTHENTICATION_FOR_LOGIN"),
+                kv("userId", authentication.getName())
+        );
+
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

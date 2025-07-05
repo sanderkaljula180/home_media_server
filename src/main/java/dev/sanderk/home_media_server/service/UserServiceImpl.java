@@ -7,17 +7,19 @@ import dev.sanderk.home_media_server.exception.UserAlreadyExistsException;
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import static net.logstash.logback.argument.StructuredArguments.kv;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserFactory userFactory;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl(UserRepository userRepository, UserFactory userFactory) {
         this.userRepository = userRepository;
@@ -27,7 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerNewDefaultUser(UserDTO userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            logger.warn("Username {} already exists", userDto.getUsername());
+            log.error("Username already exists",
+                    kv("event", "NEW_USER_REGISTRATION"),
+                    kv("userId", userDto.getUsername())
+            );
+
             throw new UserAlreadyExistsException("Username " + userDto.getUsername() + " already exists");
         }
 
@@ -35,8 +41,4 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return user;
     }
-
-
-
-
 }

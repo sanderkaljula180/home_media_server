@@ -12,7 +12,6 @@ public class UserRoleManager {
 
     private final RoleRepository roleRepository;
 
-
     public UserRoleManager(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }

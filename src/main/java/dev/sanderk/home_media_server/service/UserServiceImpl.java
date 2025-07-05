@@ -1,15 +1,12 @@
 package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.component.UserFactory;
-import dev.sanderk.home_media_server.config.GlobalExceptionHandler;
 import dev.sanderk.home_media_server.dto.UserDTO;
 import dev.sanderk.home_media_server.exception.UserAlreadyExistsException;
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.model.User;
 import dev.sanderk.home_media_server.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;

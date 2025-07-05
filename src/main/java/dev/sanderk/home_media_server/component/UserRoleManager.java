@@ -2,7 +2,6 @@ package dev.sanderk.home_media_server.component;
 
 import dev.sanderk.home_media_server.model.Role;
 import dev.sanderk.home_media_server.repository.RoleRepository;
-import dev.sanderk.home_media_server.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;

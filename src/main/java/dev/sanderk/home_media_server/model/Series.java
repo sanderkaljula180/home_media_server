@@ -21,7 +21,7 @@ public class Series {
     private String series_description;
 
     @Column(nullable = false)
-    private String rating;
+    private double rating;
 
     @Column(nullable = false)
     private String thumbnail_url;

@@ -16,6 +16,6 @@ public class Genre {
     @Column(nullable = false)
     private String tag;
 
-    @ManyToMany(mappedBy = "studios")
+    @ManyToMany(mappedBy = "genres")
     private Set<Series> series;
 }

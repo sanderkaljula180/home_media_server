@@ -1,6 +1,6 @@
 package dev.sanderk.home_media_server.controller;
 
-import dev.sanderk.home_media_server.dto.SeriesListDTO;
+import dev.sanderk.home_media_server.dto.SeriesCardDTO;
 import dev.sanderk.home_media_server.repository.SeriesRepository;
 import dev.sanderk.home_media_server.service.ListsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class ListController {
     }
 
     @GetMapping("/series")
-    public ResponseEntity<List<SeriesListDTO>> getAllSeries() {
+    public ResponseEntity<List<SeriesCardDTO>> getAllSeries() {
         log.info("Get series list for main screen",
                 kv("event", "GET_LIST_REQUEST")
         );

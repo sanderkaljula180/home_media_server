@@ -1,6 +1,6 @@
 package dev.sanderk.home_media_server.controller;
 
-import dev.sanderk.home_media_server.model.Video;
+import dev.sanderk.home_media_server.model.EpisodeVideo;
 import dev.sanderk.home_media_server.service.VideoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class VideoController {
 
     // API for seeing all videos. Should send list of videos with video name, duration and thumbnail
     @GetMapping
-    public ResponseEntity<List<Video>> getAllVideos() {
+    public ResponseEntity<List<EpisodeVideo>> getAllVideos() {
         return new ResponseEntity<>(videoService.getAllVideos(), HttpStatus.OK);
     }
 

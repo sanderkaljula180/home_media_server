@@ -1,6 +1,6 @@
 package dev.sanderk.home_media_server.service;
 
-import dev.sanderk.home_media_server.dto.SeriesListDTO;
+import dev.sanderk.home_media_server.dto.SeriesCardDTO;
 import dev.sanderk.home_media_server.helper.CreateSeriesObject;
 import dev.sanderk.home_media_server.model.Series;
 import dev.sanderk.home_media_server.repository.SeriesRepository;
@@ -30,7 +30,7 @@ public class ListsServiceTest {
         when(seriesRepository.findAll()).thenReturn(listOfSeries);
 
         // Act
-        List<SeriesListDTO> result = listsService.seriesListDTO();
+        List<SeriesCardDTO> result = listsService.seriesListDTO();
 
         // Assert
         verify(seriesRepository, times(1)).findAll();

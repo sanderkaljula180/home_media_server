@@ -36,4 +36,8 @@ public class Episode {
     @JoinColumn(name = "series_id")
     private Series series;
 
+    @OneToOne
+    @JoinColumn(name = "episode_video_id")
+    private EpisodeVideo episodeVideo;
+
 }

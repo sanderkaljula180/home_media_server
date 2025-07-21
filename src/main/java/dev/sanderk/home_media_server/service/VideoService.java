@@ -1,6 +1,6 @@
 package dev.sanderk.home_media_server.service;
 
-import dev.sanderk.home_media_server.model.Video;
+import dev.sanderk.home_media_server.model.EpisodeVideo;
 import dev.sanderk.home_media_server.repository.VideoRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,9 +27,9 @@ public class VideoService {
         this.videoRepository = videoRepository;
     }
 
-    public List<Video> getAllVideos() {
-        List<Video> listOfAllVideos = videoRepository.findAll();
-        return listOfAllVideos;
+    public List<EpisodeVideo> getAllVideos() {
+        List<EpisodeVideo> listOfAllEpisodeVideos = videoRepository.findAll();
+        return listOfAllEpisodeVideos;
     }
 
     public ResponseEntity<byte[]> streamSelectedVideo(String httpRangeList, String videoFormat, String videoName) throws IOException {

@@ -2,6 +2,7 @@ package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.dto.SeriesCardDTO;
 import dev.sanderk.home_media_server.helper.CreateSeriesObject;
+import dev.sanderk.home_media_server.mapper.SeriesMapper;
 import dev.sanderk.home_media_server.model.Series;
 import dev.sanderk.home_media_server.repository.SeriesRepository;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,9 @@ public class ListsServiceTest {
     @Mock
     private SeriesRepository seriesRepository;
 
+    @Mock
+    private SeriesMapper seriesMapper;
+
     @InjectMocks
     private ListsServiceImpl listsService;
 
@@ -28,16 +32,25 @@ public class ListsServiceTest {
     void getMainScreenSeriesListTest_Success() {
         // Arrange
         List<Series> listOfSeries = CreateSeriesObject.newListOfSeriesForTest();
+        Series seriesObjectForMapper = CreateSeriesObject.newSeriesForTest();
         int page = 1;
         int size = 2;
 
         when(seriesRepository.findAllSeriesWithPageable(PageRequest.of(page, size))).thenReturn(listOfSeries);
+        when(seriesMapper.seriesIntoCardDTO(any(Series.class))).thenReturn(
+                new SeriesCardDTO(
+                        seriesObjectForMapper.getSeries_name(),
+                        seriesObjectForMapper.getThumbnail_url(),
+                        seriesObjectForMapper.getRating()
+                )
+        );
 
         // Act
         List<SeriesCardDTO> result = listsService.seriesCardListDTO(page, size);
 
         // Assert
         verify(seriesRepository).findAllSeriesWithPageable(PageRequest.of(page, size));
+        verify(seriesMapper, times(2)).seriesIntoCardDTO(any(Series.class));
         assertEquals(2, result.size());
         assertEquals("seriesName", result.get(0).getSeries_name());
         assertEquals(5.2, result.get(0).getRating());

@@ -36,11 +36,12 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public List<SeriesCardDTO> seriesListDTO() {
-        List<SeriesCardDTO> seriesCardDTO = seriesRepository.findAll()
+    public List<SeriesCardDTO> seriesCardListDTO(int page, int size) {
+        List<SeriesCardDTO> seriesCardDTO = seriesRepository.findAllSeriesWithPageable(PageRequest.of(page, size))
                 .stream()
                 .map(seriesMapper::seriesIntoCardDTO)
                 .toList();
+
         log.info("Get series list for main screen",
                 kv("event", "GET_LIST_SUCCESS")
         );

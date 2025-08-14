@@ -11,9 +11,9 @@ public interface ListsService {
      * Returns the full list of all series.
      * Sends back series name, thumbnail url and rating. This is all the data we want for series screen list for now.
      *
-     * @return SeriesListDTO
+     * @return seriesCardListDTO
      */
-    List<SeriesCardDTO> seriesListDTO();
+    List<SeriesCardDTO> seriesCardListDTO(int page, int size);
 
     /**
      * Returns the full list of all movies

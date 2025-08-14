@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,14 +28,15 @@ public class ListController {
         this.listsService = listsService;
     }
 
-    @GetMapping("/series")
-    public ResponseEntity<List<SeriesCardDTO>> getAllSeries() {
-        log.info("Get series list for main screen",
+    // This one is going do get pathvariables for pageable series?page={pageNumber}&size={sizeNumber}
+    @GetMapping("/series?page={pageNumber}&size={sizeNumber}")
+    public ResponseEntity<List<SeriesCardDTO>> getAllSeries(@PathVariable int pageNumber, @PathVariable int sizeNumber) {
+        log.info("Get series list for series view",
                 kv("event", "GET_LIST_REQUEST")
         );
 
         return ResponseEntity.status(HttpStatus.FOUND)
-                .body(listsService.seriesListDTO());
+                .body(listsService.seriesCardListDTO(pageNumber, sizeNumber));
     }
 
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,13 +28,16 @@ public class ListsServiceTest {
     void getMainScreenSeriesListTest_Success() {
         // Arrange
         List<Series> listOfSeries = CreateSeriesObject.newListOfSeriesForTest();
-        when(seriesRepository.findAll()).thenReturn(listOfSeries);
+        int page = 1;
+        int size = 2;
+
+        when(seriesRepository.findAllSeriesWithPageable(PageRequest.of(page, size))).thenReturn(listOfSeries);
 
         // Act
-        List<SeriesCardDTO> result = listsService.seriesListDTO();
+        List<SeriesCardDTO> result = listsService.seriesCardListDTO(page, size);
 
         // Assert
-        verify(seriesRepository, times(1)).findAll();
+        verify(seriesRepository).findAllSeriesWithPageable(PageRequest.of(page, size));
         assertEquals(2, result.size());
         assertEquals("seriesName", result.get(0).getSeries_name());
         assertEquals(5.2, result.get(0).getRating());

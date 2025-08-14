@@ -1,8 +1,9 @@
-INSERT INTO videos (id, name, duration, description)
-VALUES (1, 'toystory1.mp4', 5420, 'Epic action flick');
+INSERT INTO movie_videos (Id, filename, format, duration, size, path, resolution)
+VALUES (1, 'the_batman.mp4', 'mp4', '02:56:12', 8448098304, 'src/main/resources/movies/the_batman/the_batman.mp4', '3840x1606');
 
-INSERT INTO videos (id, name, duration, description)
-VALUES (2, 'toystory2.mp4', 6340, 'Cozy indie drama');
+INSERT INTO movies (id, movie_name, description, rating, thumbnail_url, release_date, movie_video_id)
+VALUES (1, 'The Batman', 'Bruce Wayne fights crime in Gotham.', 8.7,
+        '/images/the_batman.jpg', '2022-03-04', 1);
 
 INSERT INTO roles (role_name)
 VALUES ('ADMIN');

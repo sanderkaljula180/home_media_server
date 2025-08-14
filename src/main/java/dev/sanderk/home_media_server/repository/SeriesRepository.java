@@ -13,4 +13,7 @@ import java.util.List;
 public interface SeriesRepository extends JpaRepository<Series, Long> {
     @Query(value = "SELECT * FROM series ORDER BY RAND()", nativeQuery = true)
     List<Series> findRandomSeries(Pageable pageable);
+
+    @Query(value = "SELECT * FROM series ORDER BY id", nativeQuery = true)
+    List<Series> findAllSeriesWithPageable(Pageable pageable);
 }

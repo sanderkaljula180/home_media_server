@@ -18,10 +18,10 @@ public class MovieVideo {
     private String format;
 
     @Column(nullable = false)
-    private int duration;
+    private String duration;
 
     @Column(nullable = false)
-    private int size;
+    private Long size;
 
     @Column(nullable = false)
     private String path;

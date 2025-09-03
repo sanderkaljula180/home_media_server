@@ -47,6 +47,24 @@ public class Series {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
 
+    @ManyToMany
+    @JoinTable(name = "series_stars",
+            joinColumns = @JoinColumn(name = "series_id"),
+            inverseJoinColumns = @JoinColumn(name = "star_id"))
+    private Set<Star> stars;
+
+    @ManyToMany
+    @JoinTable(name = "series_writers",
+            joinColumns = @JoinColumn(name = "series_id"),
+            inverseJoinColumns = @JoinColumn(name = "writer_id"))
+    private Set<Writer> writers;
+
+    @ManyToMany
+    @JoinTable(name = "series_directors",
+            joinColumns = @JoinColumn(name = "series_id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id"))
+    private Set<Director> directors;
+
     @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
     private List<Episode> episodes;
 

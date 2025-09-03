@@ -3,6 +3,8 @@ package dev.sanderk.home_media_server.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "movie_videos")
@@ -32,4 +34,6 @@ public class MovieVideo {
     @OneToOne(mappedBy = "movieVideo")
     private Movie movie;
 
+    @OneToMany(mappedBy = "video")
+    private List<MovieWatchProgress> watchProgresses;
 }

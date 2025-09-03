@@ -40,8 +40,26 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
 
+    @ManyToMany
+    @JoinTable(name = "movie_stars",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "star_id"))
+    private Set<Star> stars;
+
+    @ManyToMany
+    @JoinTable(name = "movie_writers",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "writer_id"))
+    private Set<Writer> writers;
+
+    @ManyToMany
+    @JoinTable(name = "movie_directors",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id"))
+    private Set<Director> directors;
+
     @OneToOne
-    @JoinColumn(name = "movie_video_id")
+    @JoinColumn(name = "movie_video_id", unique = true, nullable = false)
     private MovieVideo movieVideo;
 
 }

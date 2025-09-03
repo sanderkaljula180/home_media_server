@@ -1,8 +1,8 @@
 INSERT INTO movie_videos (Id, filename, format, duration, size, path, resolution)
-VALUES (1, 'the_batman.mp4', 'mp4', '02:56:12', 8448098304, 'src/main/resources/movies/the_batman/the_batman.mp4', '3840x1606');
+VALUES (1, 'the_batman.mp4', 'mp4', '02:56:12', 8448098304, 'movies/the_batman/the_batman.mp4', '3840x1606');
 
 INSERT INTO movies (id, movie_name, description, rating, thumbnail_url, release_date, movie_video_id)
-VALUES (1, 'The Batman', 'Bruce Wayne fights crime in Gotham.', 8.7,
+VALUES (1, 'The Batman', 'When a sadistic serial killer begins murdering key political figures in Gotham, the Batman is forced to investigate the citys hidden corruption and question his familys involvement.', 8.7,
         '/images/the_batman.jpg', '2022-03-04', 1);
 
 INSERT INTO roles (role_name)

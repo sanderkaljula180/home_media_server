@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     // TÖÖTAS
-    @PostMapping("/test")
+    @GetMapping("/test")
     public ResponseEntity<String> test() {
         return new ResponseEntity<>("TÖÖTAB", HttpStatus.ACCEPTED);
     }

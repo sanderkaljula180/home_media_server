@@ -11,21 +11,22 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String movie_name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
     private double rating;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     private String thumbnail_url;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 32)
     private String release_date;
 
     @ManyToMany

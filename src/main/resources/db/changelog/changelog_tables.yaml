@@ -1,0 +1,832 @@
+# JÄRJEKORRAS PEAB NEED PANEMA MUIDU TA EI LEIA ÜLES
+
+databaseChangeLog:
+  - changeSet:
+      id: create-studios
+      author: sander
+      changes:
+        - createTable:
+            tableName: studios
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-genre
+      author: sander
+      changes:
+        - createTable:
+            tableName: genres
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tag
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-stars
+      author: sander
+      changes:
+        - createTable:
+            tableName: stars
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: star
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-writer
+      author: sander
+      changes:
+        - createTable:
+            tableName: writers
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: writer
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-director
+      author: sander
+      changes:
+        - createTable:
+            tableName: directors
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: director
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+        id: create-movie-videos
+        author: sander
+        changes:
+          - createTable:
+              tableName: movie_videos
+              columns:
+                - column:
+                    name: id
+                    type: BIGINT
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: filename
+                    type: VARCHAR(255)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: format
+                    type: VARCHAR(50)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: duration
+                    type: VARCHAR(50)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: size
+                    type: BIGINT
+                    constraints:
+                      nullable: false
+                - column:
+                    name: path
+                    type: VARCHAR(1024)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: resolution
+                    type: VARCHAR(64)
+                    constraints:
+                      nullable: false
+
+  - changeSet:
+      id: create-movie-studio
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_studio
+            columns:
+              - column:
+                  name: movie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: studio_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: movie_studio
+            columnNames: movie_id, studio_id
+            constraintName: pk_movie_studio
+        - addForeignKeyConstraint:
+            baseTableName: movie_studio
+            baseColumnNames: movie_id
+            referencedTableName: movies
+            referencedColumnNames: id
+            constraintName: fk_movie_studio_movie
+        - addForeignKeyConstraint:
+            baseTableName: movie_studio
+            baseColumnNames: studio_id
+            referencedTableName: studios
+            referencedColumnNames: id
+            constraintName: fk_movie_studio_studio
+
+  - changeSet:
+      id: create-movie-genre
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_genre
+            columns:
+              - column:
+                  name: movie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: genre_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: movie_genre
+            columnNames: movie_id, genre_id
+            constraintName: pk_movie_genre
+        - addForeignKeyConstraint:
+            baseTableName: movie_genre
+            baseColumnNames: movie_id
+            referencedTableName: movies
+            referencedColumnNames: id
+            constraintName: fk_movie_genre_movie
+        - addForeignKeyConstraint:
+            baseTableName: movie_genre
+            baseColumnNames: genre_id
+            referencedTableName: genres
+            referencedColumnNames: id
+            constraintName: fk_movie_genre_genre
+
+  - changeSet:
+      id: create-movie-stars
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_stars
+            columns:
+              - column:
+                  name: movie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: star_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: movie_stars
+            columnNames: movie_id, star_id
+            constraintName: pk_movie_stars
+        - addForeignKeyConstraint:
+            baseTableName: movie_stars
+            baseColumnNames: movie_id
+            referencedTableName: movies
+            referencedColumnNames: id
+            constraintName: fk_movie_stars_movie
+        - addForeignKeyConstraint:
+            baseTableName: movie_stars
+            baseColumnNames: star_id
+            referencedTableName: stars
+            referencedColumnNames: id
+            constraintName: fk_movie_stars_star
+
+  - changeSet:
+      id: create-movie-writers
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_writers
+            columns:
+              - column:
+                  name: movie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: writer_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: movie_writers
+            columnNames: movie_id, writer_id
+            constraintName: pk_movie_writers
+        - addForeignKeyConstraint:
+            baseTableName: movie_writers
+            baseColumnNames: movie_id
+            referencedTableName: movies
+            referencedColumnNames: id
+            constraintName: fk_movie_writers_movie
+        - addForeignKeyConstraint:
+            baseTableName: movie_writers
+            baseColumnNames: writer_id
+            referencedTableName: writers
+            referencedColumnNames: id
+            constraintName: fk_movie_writers_writer
+
+  - changeSet:
+      id: create-movie-directors
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_directors
+            columns:
+              - column:
+                  name: movie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: director_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: movie_directors
+            columnNames: movie_id, director_id
+            constraintName: pk_movie_directors
+        - addForeignKeyConstraint:
+            baseTableName: movie_directors
+            baseColumnNames: movie_id
+            referencedTableName: movies
+            referencedColumnNames: id
+            constraintName: fk_movie_directors_movie
+        - addForeignKeyConstraint:
+            baseTableName: movie_directors
+            baseColumnNames: director_id
+            referencedTableName: directors
+            referencedColumnNames: id
+            constraintName: fk_movie_directors_director
+
+  - changeSet:
+      id: create-movies
+      author: sander
+      changes:
+        - createTable:
+            tableName: movies
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: movie_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rating
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: thumbnail_url
+                  type: VARCHAR(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_date
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: movie_video_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+
+        - addForeignKeyConstraint:
+            baseTableName: movies
+            baseColumnNames: movie_video_id
+            referencedTableName: movie_videos
+            referencedColumnNames: id
+            constraintName: fk_movies_movie_video
+
+  - changeSet:
+      id: create-series
+      author: sander
+      changes:
+        - createTable:
+            tableName: series
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: series_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: series_description
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rating
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: thumbnail_url
+                  type: VARCHAR(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_date
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seasons_number
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: episodes_number
+                  type: INT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-series-studio
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_studio
+            columns:
+              - column: { name: series_id, type: BIGINT, constraints: { nullable: false } }
+              - column: { name: studio_id, type: BIGINT, constraints: { nullable: false } }
+        - addPrimaryKey: { tableName: series_studio, columnNames: series_id, studio_id, constraintName: pk_series_studio }
+        - addForeignKeyConstraint:
+            baseTableName: series_studio
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_studio_series
+        - addForeignKeyConstraint:
+            baseTableName: series_studio
+            baseColumnNames: studio_id
+            referencedTableName: studios
+            referencedColumnNames: id
+            constraintName: fk_series_studio_studio
+
+  - changeSet:
+      id: create-series-genre
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_genre
+            columns:
+              - column: { name: series_id, type: BIGINT, constraints: { nullable: false } }
+              - column: { name: genre_id, type: INT, constraints: { nullable: false } }
+        - addPrimaryKey: { tableName: series_genre, columnNames: series_id, genre_id, constraintName: pk_series_genre }
+        - addForeignKeyConstraint:
+            baseTableName: series_genre
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_genre_series
+        - addForeignKeyConstraint:
+            baseTableName: series_genre
+            baseColumnNames: genre_id
+            referencedTableName: genres
+            referencedColumnNames: id
+            constraintName: fk_series_genre_genre
+
+  - changeSet:
+      id: create-series-stars
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_stars
+            columns:
+              - column: { name: series_id, type: BIGINT, constraints: { nullable: false } }
+              - column: { name: star_id, type: BIGINT, constraints: { nullable: false } }
+        - addPrimaryKey: { tableName: series_stars, columnNames: series_id, star_id, constraintName: pk_series_stars }
+        - addForeignKeyConstraint:
+            baseTableName: series_stars
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_stars_series
+        - addForeignKeyConstraint:
+            baseTableName: series_stars
+            baseColumnNames: star_id
+            referencedTableName: stars
+            referencedColumnNames: id
+            constraintName: fk_series_stars_star
+
+  - changeSet:
+      id: create-series-writers
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_writers
+            columns:
+              - column: { name: series_id, type: BIGINT, constraints: { nullable: false } }
+              - column: { name: writer_id, type: BIGINT, constraints: { nullable: false } }
+        - addPrimaryKey: { tableName: series_writers, columnNames: series_id, writer_id, constraintName: pk_series_writers }
+        - addForeignKeyConstraint:
+            baseTableName: series_writers
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_writers_series
+        - addForeignKeyConstraint:
+            baseTableName: series_writers
+            baseColumnNames: writer_id
+            referencedTableName: writers
+            referencedColumnNames: id
+            constraintName: fk_series_writers_writer
+
+  - changeSet:
+      id: create-series-directors
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_directors
+            columns:
+              - column: { name: series_id, type: BIGINT, constraints: { nullable: false } }
+              - column: { name: director_id, type: INT, constraints: { nullable: false } }
+        - addPrimaryKey: { tableName: series_directors, columnNames: series_id, director_id, constraintName: pk_series_directors }
+        - addForeignKeyConstraint:
+            baseTableName: series_directors
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_directors_series
+        - addForeignKeyConstraint:
+            baseTableName: series_directors
+            baseColumnNames: director_id
+            referencedTableName: directors
+            referencedColumnNames: id
+            constraintName: fk_series_directors_director
+
+  - changeSet:
+      id: create-users
+      author: sander
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-roles
+      author: sander
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+  - changeSet:
+      id: create-users-roles
+      author: sander
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: users_roles
+            columnNames: user_id, role_id
+            constraintName: pk_users_roles
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_users_roles_user
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+            constraintName: fk_users_roles_role
+
+  - changeSet:
+      id: create-episode-videos
+      author: sander
+      changes:
+        - createTable:
+            tableName: episode_videos
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: filename
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: format
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: duration
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: size
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: VARCHAR(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resolution
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-episodes
+      author: sander
+      changes:
+        - createTable:
+            tableName: episodes
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: episode_description
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: episode_number
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: season_number
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_date
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: duration
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: thumbnail_url
+                  type: VARCHAR(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: series_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: episode_video_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+
+        - addForeignKeyConstraint:
+            baseTableName: episodes
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_episodes_series
+
+        - addForeignKeyConstraint:
+            baseTableName: episodes
+            baseColumnNames: episode_video_id
+            referencedTableName: episode_videos
+            referencedColumnNames: id
+            constraintName: fk_episodes_episode_video
+
+  - changeSet:
+      id: create-series-watch-progress
+      author: sander
+      changes:
+        - createTable:
+            tableName: series_watch_progress
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: series_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: episode_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: series_watch_progress
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_series_watch_progress_user
+
+        - addForeignKeyConstraint:
+            baseTableName: series_watch_progress
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_series_watch_progress_series
+
+        - addForeignKeyConstraint:
+            baseTableName: series_watch_progress
+            baseColumnNames: episode_id
+            referencedTableName: episodes
+            referencedColumnNames: id
+            constraintName: fk_series_watch_progress_episode
+
+  - changeSet:
+      id: create-movie-watch-progress
+      author: sander
+      changes:
+        - createTable:
+            tableName: movie_watch_progress
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: movie_video_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: movie_watch_progress
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_movie_watch_progress_user
+
+        - addForeignKeyConstraint:
+            baseTableName: movie_watch_progress
+            baseColumnNames: movie_video_id
+            referencedTableName: movie_videos
+            referencedColumnNames: id
+            constraintName: fk_movie_watch_progress_movie_video

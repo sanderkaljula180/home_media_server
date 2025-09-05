@@ -17,7 +17,4 @@ public class Studio {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "studios")
-    private Set<Series> series;
-
 }

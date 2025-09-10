@@ -26,9 +26,11 @@ public class VideoController {
     }
 
     // API for watching a video
-    @GetMapping("/stream/{videoFormat}/{videoName}")
-    public ResponseEntity<byte[]> streamSelectedVideo(@RequestHeader(value = "Range", required = false) String httpRangeList, @PathVariable("videoFormat") String videoFormat, @PathVariable("videoName") String videoName) throws IOException {
-        return videoService.streamSelectedVideo(httpRangeList, videoFormat, videoName);
+    // streamSelectedContent
+    // /stream/{contentName}
+    @GetMapping("/stream/{contentType}/{contentName}")
+    public ResponseEntity<byte[]> streamSelectedContent(@RequestHeader(value = "Range", required = false) String httpRangeList, @PathVariable("contentName") String contentName, @PathVariable("contentType") String contentType) throws IOException {
+        return videoService.streamSelectedVideo(httpRangeList, contentName, contentType);
     }
 
 }

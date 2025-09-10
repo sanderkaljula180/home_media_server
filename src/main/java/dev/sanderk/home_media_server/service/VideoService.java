@@ -1,6 +1,8 @@
 package dev.sanderk.home_media_server.service;
 
 import dev.sanderk.home_media_server.model.EpisodeVideo;
+import dev.sanderk.home_media_server.repository.MovieRepository;
+import dev.sanderk.home_media_server.repository.SeriesRepository;
 import dev.sanderk.home_media_server.repository.VideoRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,15 @@ import java.util.Optional;
 public class VideoService {
 
     private final VideoRepository videoRepository;
+    private final MovieRepository movieRepository;
+    private final SeriesRepository seriesRepository;
 
     final int CHUNK_SIZE = 4 * 1024 * 1024;
 
-    public VideoService(VideoRepository videoRepository) {
+    public VideoService(VideoRepository videoRepository, MovieRepository movieRepository, SeriesRepository seriesRepository) {
         this.videoRepository = videoRepository;
+        this.movieRepository = movieRepository;
+        this.seriesRepository = seriesRepository;
     }
 
     public List<EpisodeVideo> getAllVideos() {
@@ -32,17 +38,22 @@ public class VideoService {
         return listOfAllEpisodeVideos;
     }
 
-    public ResponseEntity<byte[]> streamSelectedVideo(String httpRangeList, String videoFormat, String videoName) throws IOException {
+    public ResponseEntity<byte[]> streamSelectedVideo(String httpRangeList, String contentName, String contentType) throws IOException {
 
         // Video file path logic is going do change. Right now we have main folder static and video name and format
         // coming from API path variable.
-        // Correct way for me is for video path coming from database movie_videos table. API path variable just says the
-        // movie or series video name.
-        String fullVideoFileName = videoName + "." + videoFormat;
-        Path videoFilePath = Paths.get("video", fullVideoFileName);
-        File videoFile = Optional.of(videoFilePath.toFile())
+        // The correct way for me is for video path coming from database movie_videos table. API path variable just says the
+        // movie or series video name aka content name.
+
+
+        Path contentFilePath = "movie".equals(contentType)
+                ? movieRepository.findMoviePath(contentName)
+                : seriesRepository.findSeriesPath(contentName);
+
+        File videoFile = Optional.ofNullable(contentFilePath)
+                .map(Path::toFile)
                 .filter(File::exists)
-                .orElseThrow(() -> new FileNotFoundException("File not found: " + fullVideoFileName));
+                .orElseThrow(() -> new FileNotFoundException("File not found: " + contentName));
 
         String[] splitIntoRegularRange = httpRangeList.split("=");
         String[] splitHttpRangeListIntoStart = splitIntoRegularRange[1].split("-");

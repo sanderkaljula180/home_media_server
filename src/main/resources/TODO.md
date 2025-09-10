@@ -73,3 +73,4 @@ Progress Tracking
 [ ] Add correlationId for logging
 
 
+I should add some bucket with docker for thumbnails and other static content.

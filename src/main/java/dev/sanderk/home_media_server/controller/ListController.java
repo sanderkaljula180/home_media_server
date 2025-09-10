@@ -1,5 +1,6 @@
 package dev.sanderk.home_media_server.controller;
 
+import dev.sanderk.home_media_server.dto.MoviesCardDTO;
 import dev.sanderk.home_media_server.dto.SeriesCardDTO;
 import dev.sanderk.home_media_server.repository.SeriesRepository;
 import dev.sanderk.home_media_server.service.ListsServiceImpl;
@@ -37,6 +38,16 @@ public class ListController {
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .body(listsService.seriesCardListDTO(pageNumber, sizeNumber));
+    }
+
+    @GetMapping("/movies?page={pageNumber}&size={sizeNumber}")
+    public ResponseEntity<List<MoviesCardDTO>> getAllMovies(@PathVariable int pageNumber, @PathVariable int sizeNumber) {
+        log.info("Get movies list for movies view",
+                kv("event", "GET_LIST_REQUEST")
+        );
+
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(listsService.moviesCardListDTO(pageNumber, sizeNumber));
     }
 
 }

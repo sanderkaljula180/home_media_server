@@ -1,7 +1,6 @@
 package dev.sanderk.home_media_server.repository;
 
 import dev.sanderk.home_media_server.model.Movie;
-import dev.sanderk.home_media_server.model.Series;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,10 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query(value = "SELECT * FROM movies ORDER BY RAND()", nativeQuery = true)
-    List<Movie> findRandomMovies(Pageable pageable);
+    List<Movie> findRandomMoviesWithPageable(Pageable pageable);
+
+    @Query(value = "SELECT * FROM movies ORDER BY movie_name ASC", nativeQuery = true)
+    List<Movie> findAllMoviesWithPageable(Pageable pageable);
 
     @Query(value = "SELECT m.movie_name, mv.path " +
             "FROM movies m JOIN movie_videos mv " +

@@ -42,10 +42,23 @@ public class ListsServiceImpl implements ListsService {
                 .map(seriesMapper::seriesIntoCardDTO)
                 .toList();
 
-        log.info("Get series list for main screen",
+        log.info("Get series list for series view",
                 kv("event", "GET_LIST_SUCCESS")
         );
         return seriesCardDTO;
+    }
+
+    @Override
+    public List<MoviesCardDTO> moviesCardListDTO(int page, int size) {
+        List<MoviesCardDTO> moviesCardDTO = movieRepository.findAllMoviesWithPageable(PageRequest.of(page, size))
+                .stream()
+                .map(moviesMapper::moviesIntoCardDTO)
+                .toList();
+
+        log.info("Get movies list for movie view",
+                kv("event", "GET_LIST_SUCCESS")
+        );
+        return moviesCardDTO;
     }
 
     @Override
@@ -55,12 +68,12 @@ public class ListsServiceImpl implements ListsService {
         int numberOfSeriesOnTheList = maximumCount / 2;
         int numberOfMoviesOnTheList = maximumCount - numberOfSeriesOnTheList;
 
-        List<SeriesCardDTO> listOfRandomSeries = seriesRepository.findRandomSeries(PageRequest.of(0, numberOfSeriesOnTheList))
+        List<SeriesCardDTO> listOfRandomSeries = seriesRepository.findRandomSeriesWithPageable(PageRequest.of(0, numberOfSeriesOnTheList))
                 .stream()
                 .map(seriesMapper::seriesIntoCardDTO)
                 .toList();
 
-        List<MoviesCardDTO> listOfRandomMovies = movieRepository.findRandomMovies(PageRequest.of(0, numberOfMoviesOnTheList))
+        List<MoviesCardDTO> listOfRandomMovies = movieRepository.findRandomMoviesWithPageable(PageRequest.of(0, numberOfMoviesOnTheList))
                 .stream()
                 .map(moviesMapper::moviesIntoCardDTO)
                 .toList();

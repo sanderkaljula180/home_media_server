@@ -10,7 +10,8 @@ public class SeriesMapper {
         return new SeriesCardDTO(
                 series.getSeries_name(),
                 series.getThumbnail_url(),
-                series.getRating()
+                series.getRating(),
+                series.getSeries_description()
         );
     }
 }

@@ -11,12 +11,14 @@ import org.springframework.stereotype.Repository;
 import java.nio.file.Path;
 import java.util.List;
 
+// I dont know why I added BY ORDER BY random or by id. First time better is do just give ORDER by ASC
+// I added it because I have this method in my list service mainScreenListDTO.
 @Repository
 public interface SeriesRepository extends JpaRepository<Series, Long> {
     @Query(value = "SELECT * FROM series ORDER BY RAND()", nativeQuery = true)
-    List<Series> findRandomSeries(Pageable pageable);
+    List<Series> findRandomSeriesWithPageable(Pageable pageable);
 
-    @Query(value = "SELECT * FROM series ORDER BY id", nativeQuery = true)
+    @Query(value = "SELECT * FROM series ORDER BY series_name ASC", nativeQuery = true)
     List<Series> findAllSeriesWithPageable(Pageable pageable);
 
     // SQL command for finding series episode video

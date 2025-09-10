@@ -10,7 +10,8 @@ public class MoviesMapper {
         return new MoviesCardDTO(
                 movie.getMovie_name(),
                 movie.getRating(),
-                movie.getThumbnail_url()
+                movie.getThumbnail_url(),
+                movie.getDescription()
         );
     }
 }

@@ -34,6 +34,10 @@ public class VideoService {
 
     public ResponseEntity<byte[]> streamSelectedVideo(String httpRangeList, String videoFormat, String videoName) throws IOException {
 
+        // Video file path logic is going do change. Right now we have main folder static and video name and format
+        // coming from API path variable.
+        // Correct way for me is for video path coming from database movie_videos table. API path variable just says the
+        // movie or series video name.
         String fullVideoFileName = videoName + "." + videoFormat;
         Path videoFilePath = Paths.get("video", fullVideoFileName);
         File videoFile = Optional.of(videoFilePath.toFile())

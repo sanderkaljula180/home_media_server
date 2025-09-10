@@ -20,5 +20,10 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
     List<Series> findAllSeriesWithPageable(Pageable pageable);
 
     // SQL command for finding series episode video
+    // THIS IS WRONG. IT SHOULD BE SERIES NOT MOVIE
+    @Query(value = "SELECT m.movie_name, mv.path " +
+            "FROM movies m JOIN movie_videos mv " +
+            "ON m.movie_videos_id = mv.id " +
+            "WHERE m.movie_name = :name", nativeQuery = true)
     Path findSeriesPath(@Param("name") String name);
 }

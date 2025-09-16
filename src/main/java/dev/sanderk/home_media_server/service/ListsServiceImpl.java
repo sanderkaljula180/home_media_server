@@ -6,10 +6,12 @@ import dev.sanderk.home_media_server.dto.MoviesCardDTO;
 import dev.sanderk.home_media_server.dto.SeriesCardDTO;
 import dev.sanderk.home_media_server.mapper.MoviesMapper;
 import dev.sanderk.home_media_server.mapper.SeriesMapper;
+import dev.sanderk.home_media_server.model.Movie;
 import dev.sanderk.home_media_server.repository.MovieRepository;
 import dev.sanderk.home_media_server.repository.SeriesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +51,22 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    public Slice<MoviesCardDTO> moviesCardListDTO(int page, int size) {
+
+
+        Slice<MoviesCardDTO> moviesCardDTO = movieRepository.findAllMoviesWithSlice(PageRequest.of(page, size))
+                .map(moviesMapper::moviesIntoCardDTO);
+
+        log.info("Get movies list for movie view",
+                kv("event", "GET_LIST_SUCCESS")
+        );
+        return moviesCardDTO;
+    }
+
+/*    @Override
     public List<MoviesCardDTO> moviesCardListDTO(int page, int size) {
+
+
         List<MoviesCardDTO> moviesCardDTO = movieRepository.findAllMoviesWithPageable(PageRequest.of(page, size))
                 .stream()
                 .map(moviesMapper::moviesIntoCardDTO)
@@ -59,7 +76,7 @@ public class ListsServiceImpl implements ListsService {
                 kv("event", "GET_LIST_SUCCESS")
         );
         return moviesCardDTO;
-    }
+    }*/
 
     @Override
     public List<MainScreenListDTO> mainScreenListDTO() {

@@ -2,8 +2,11 @@ package dev.sanderk.home_media_server.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "directors")
 public class Director {

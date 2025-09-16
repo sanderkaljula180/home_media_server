@@ -41,7 +41,8 @@ public class ListsServiceTest {
                 new SeriesCardDTO(
                         seriesObjectForMapper.getSeries_name(),
                         seriesObjectForMapper.getThumbnail_url(),
-                        seriesObjectForMapper.getRating()
+                        seriesObjectForMapper.getRating(),
+                        seriesObjectForMapper.getThumbnail_url()
                 )
         );
 

@@ -2,9 +2,12 @@ package dev.sanderk.home_media_server.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "countries")
 public class Country {
 

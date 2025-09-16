@@ -4,6 +4,7 @@ package dev.sanderk.home_media_server.service;
 import dev.sanderk.home_media_server.dto.MainScreenListDTO;
 import dev.sanderk.home_media_server.dto.MoviesCardDTO;
 import dev.sanderk.home_media_server.dto.SeriesCardDTO;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface ListsService {
      *
      * @return MoviesListDTO
      */
-    List<MoviesCardDTO> moviesCardListDTO(int page, int size);
+    Slice<MoviesCardDTO> moviesCardListDTO(int page, int size);
 
     /**
      * Returns list of 6,8 or 10 randomized movies or series from database.

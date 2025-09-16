@@ -2,6 +2,7 @@ package dev.sanderk.home_media_server.repository;
 
 import dev.sanderk.home_media_server.model.Movie;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(value = "SELECT * FROM movies ORDER BY movie_name ASC", nativeQuery = true)
     List<Movie> findAllMoviesWithPageable(Pageable pageable);
+
+    @Query(value = "SELECT * FROM movies ORDER BY movie_name ASC", nativeQuery = true)
+    Slice<Movie> findAllMoviesWithSlice(Pageable pageable);
 
     @Query(value = "SELECT m.movie_name, mv.path " +
             "FROM movies m JOIN movie_videos mv " +

@@ -27,5 +27,5 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
             "FROM movies m JOIN movie_videos mv " +
             "ON m.movie_videos_id = mv.id " +
             "WHERE m.movie_name = :name", nativeQuery = true)
-    Path findSeriesPath(@Param("name") String name);
+    String findSeriesPath(@Param("name") String name);
 }

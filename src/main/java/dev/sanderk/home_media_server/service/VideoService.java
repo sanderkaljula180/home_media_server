@@ -40,11 +40,12 @@ public class VideoService {
 
     public ResponseEntity<byte[]> streamSelectedVideo(String httpRangeList, String contentName, String contentType) throws IOException {
 
-        Path contentFilePath = "movie".equals(contentType)
+        String pathStr = "movie".equals(contentType)
                 ? movieRepository.findMoviePath(contentName)
                 : seriesRepository.findSeriesPath(contentName);
+        Path contentFilePath = Paths.get(pathStr);
 
-        File videoFile = Optional.ofNullable(contentFilePath)
+        File videoFile = Optional.of(contentFilePath)
                 .map(Path::toFile)
                 .filter(File::exists)
                 .orElseThrow(() -> new FileNotFoundException("File not found: " + contentName));
@@ -52,15 +53,12 @@ public class VideoService {
         String[] splitIntoRegularRange = httpRangeList.split("=");
         String[] splitHttpRangeListIntoStart = splitIntoRegularRange[1].split("-");
 
-        int httpRangeListStart = Integer.parseInt(splitHttpRangeListIntoStart[0]);
-
+        long httpRangeListStart = Long.parseLong(splitHttpRangeListIntoStart[0]);
         RandomAccessFile raf = new RandomAccessFile(videoFile, "r");
-        Long videoFileFullLength = raf.length();
+        long videoFileFullLength = raf.length();
         raf.seek(httpRangeListStart);
-
-        int httpRangeListEnd = Math.min(httpRangeListStart + CHUNK_SIZE - 1, videoFileFullLength.intValue() - 1);
-
-        int videoBytesRange = httpRangeListEnd - httpRangeListStart + 1;
+        long httpRangeListEnd = Math.min(httpRangeListStart + CHUNK_SIZE - 1, videoFileFullLength - 1);
+        long videoBytesRange = httpRangeListEnd - httpRangeListStart + 1;
 
         byte[] videoFileBytes = new byte[Math.toIntExact(videoBytesRange)];
         raf.read(videoFileBytes);

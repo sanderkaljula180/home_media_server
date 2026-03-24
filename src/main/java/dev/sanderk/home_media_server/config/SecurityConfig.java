@@ -54,6 +54,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers("/api/registration").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
+                        // This is for testing video on html only
+                        .requestMatchers("/api/videos/stream/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))

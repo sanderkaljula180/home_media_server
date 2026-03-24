@@ -22,9 +22,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query(value = "SELECT * FROM movies ORDER BY movie_name ASC", nativeQuery = true)
     Slice<Movie> findAllMoviesWithSlice(Pageable pageable);
 
-    @Query(value = "SELECT m.movie_name, mv.path " +
+    @Query(value = "SELECT mv.path " +
             "FROM movies m JOIN movie_videos mv " +
-            "ON m.movie_videos_id = mv.id " +
+            "ON m.movie_video_id = mv.id " +
             "WHERE m.movie_name = :name", nativeQuery = true)
-    Path findMoviePath(@Param("name") String name);
+    String findMoviePath(@Param("name") String name);
 }
